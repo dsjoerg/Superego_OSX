@@ -242,7 +242,6 @@ typedef NSInteger	NSWindowAnimationBehavior;
 	NSRect			poppedFrame = NSInsetRect(myFrame, -20, -20);
 	myFrame.size = snapshotImage.size;
 	NSWindow	*	animationWindow = [self uli_animationWindowForZoomEffectWithImage: snapshotImage];
-	[animationWindow setAnimationResizeTime: 0.025];
 	[animationWindow setFrame: myFrame display: YES];
 	[animationWindow orderFront: nil];
 	[animationWindow setFrame: poppedFrame display: YES animate: YES];

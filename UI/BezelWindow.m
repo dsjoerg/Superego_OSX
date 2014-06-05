@@ -140,34 +140,7 @@ static const float lineHeight = 16;
 	[super dealloc];
 }
 
-- (BOOL)performKeyEquivalent:(NSEvent*) theEvent
-{
-	if ( [self delegate] )
-	{
-		[delegate performSelector:@selector(processBezelKeyDown:) withObject:theEvent];
-		return YES;
-	}
-	return NO;
-}
 
-- (void)keyDown:(NSEvent *)theEvent {
-	if ( [self delegate] )
-	{
-		[delegate performSelector:@selector(processBezelKeyDown:) withObject:theEvent];
-	}
-}
-
-- (void)flagsChanged:(NSEvent *)theEvent {
-	if ( !    ( [theEvent modifierFlags] & NSCommandKeyMask )
-		 && ! ( [theEvent modifierFlags] & NSAlternateKeyMask )
-		 && ! ( [theEvent modifierFlags] & NSControlKeyMask )
-		 && ! ( [theEvent modifierFlags] & NSShiftKeyMask )
-		 && [ self delegate ]
-		 )
-	{
-		[delegate performSelector:@selector(metaKeysReleased)];
-	}
-}
 		
 - (id)delegate {
     return delegate;
