@@ -9,9 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
 #import "BezelWindow.h"
-#import "JumpcutStore.h"
-#import "SGHotKey.h"
-#import "DBSyncPromptDelegate.h"
 
 @class SGHotKey;
 
@@ -24,10 +21,6 @@
 	BOOL						isBezelPinned; // Currently not used
 	NSString					*currentKeycodeCharacter;
 	int							stackPosition;
-	
-	// The below were pulled in from JumpcutController
-	JumpcutStore				*clippingStore;
-	
 
     // Status item -- the little icon in the menu bar
     NSStatusItem *statusItem;

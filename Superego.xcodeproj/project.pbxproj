@@ -13,22 +13,12 @@
 		63BB6CE51940DD050042A0E9 /* StatusHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63BB6CE11940DD050042A0E9 /* StatusHighlighted@2x.png */; };
 		773ABFB113E9AA1A00AE3969 /* NSWindow+TrueCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 773ABFAF13E9AA1A00AE3969 /* NSWindow+TrueCenter.h */; };
 		773ABFB213E9AA1A00AE3969 /* NSWindow+TrueCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 773ABFB013E9AA1A00AE3969 /* NSWindow+TrueCenter.m */; };
-		7761C87C139BDE7F000FB3AB /* JumpcutClipping.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C878139BDE7F000FB3AB /* JumpcutClipping.h */; };
-		7761C87D139BDE7F000FB3AB /* JumpcutClipping.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C879139BDE7F000FB3AB /* JumpcutClipping.m */; };
-		7761C87E139BDE7F000FB3AB /* JumpcutStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C87A139BDE7F000FB3AB /* JumpcutStore.h */; };
-		7761C87F139BDE7F000FB3AB /* JumpcutStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C87B139BDE7F000FB3AB /* JumpcutStore.m */; };
-		7761C885139BDE94000FB3AB /* LoginItemsAE.c in Sources */ = {isa = PBXBuildFile; fileRef = 7761C881139BDE94000FB3AB /* LoginItemsAE.c */; };
-		7761C886139BDE94000FB3AB /* LoginItemsAE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C882139BDE94000FB3AB /* LoginItemsAE.h */; };
-		7761C887139BDE94000FB3AB /* UKLoginItemRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C883139BDE94000FB3AB /* UKLoginItemRegistry.h */; };
-		7761C888139BDE94000FB3AB /* UKLoginItemRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */; };
 		7761C890139BDEAF000FB3AB /* BezelWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88A139BDEAF000FB3AB /* BezelWindow.h */; };
 		7761C891139BDEAF000FB3AB /* BezelWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C88B139BDEAF000FB3AB /* BezelWindow.m */; };
 		7761C892139BDEAF000FB3AB /* RoundRecBezierPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88C139BDEAF000FB3AB /* RoundRecBezierPath.h */; };
 		7761C893139BDEAF000FB3AB /* RoundRecBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C88D139BDEAF000FB3AB /* RoundRecBezierPath.m */; };
 		7761C894139BDEAF000FB3AB /* RoundRecTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88E139BDEAF000FB3AB /* RoundRecTextField.h */; };
 		7761C895139BDEAF000FB3AB /* RoundRecTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C88F139BDEAF000FB3AB /* RoundRecTextField.m */; };
-		7761C899139BDEC4000FB3AB /* UKPrefsPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C897139BDEC4000FB3AB /* UKPrefsPanel.h */; };
-		7761C89A139BDEC4000FB3AB /* UKPrefsPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C898139BDEC4000FB3AB /* UKPrefsPanel.m */; };
 		7761C8DB139BE06B000FB3AB /* com.generalarcade.flycut.16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8CD139BE06B000FB3AB /* com.generalarcade.flycut.16.png */; };
 		7761C8DC139BE06B000FB3AB /* com.generalarcade.flycut.32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8CE139BE06B000FB3AB /* com.generalarcade.flycut.32.png */; };
 		7761C8DF139BE06B000FB3AB /* jumpcut.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D1139BE06B000FB3AB /* jumpcut.icns */; };
@@ -42,25 +32,13 @@
 		7761C8E7139BE06B000FB3AB /* RemoveShortcutPressed.tif in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D9139BE06B000FB3AB /* RemoveShortcutPressed.tif */; };
 		7761C8E8139BE06B000FB3AB /* RemoveShortcutRollover.tif in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8DA139BE06B000FB3AB /* RemoveShortcutRollover.tif */; };
 		7794D3D5139BF28B0047E862 /* flycut.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7794D3D4139BF28B0047E862 /* flycut.icns */; };
-		77A4F3AD139BD72300F39666 /* SGHotKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A4F3A5139BD72300F39666 /* SGHotKey.h */; };
-		77A4F3AE139BD72300F39666 /* SGHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A4F3A6139BD72300F39666 /* SGHotKey.m */; };
-		77A4F3AF139BD72300F39666 /* SGHotKeyCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A4F3A7139BD72300F39666 /* SGHotKeyCenter.h */; };
-		77A4F3B0139BD72300F39666 /* SGHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A4F3A8139BD72300F39666 /* SGHotKeyCenter.m */; };
-		77A4F3B1139BD72300F39666 /* SGKeyCodeTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A4F3A9139BD72300F39666 /* SGKeyCodeTranslator.h */; };
-		77A4F3B2139BD72300F39666 /* SGKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A4F3AA139BD72300F39666 /* SGKeyCodeTranslator.m */; };
-		77A4F3B3139BD72300F39666 /* SGKeyCombo.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A4F3AB139BD72300F39666 /* SGKeyCombo.h */; };
-		77A4F3B4139BD72300F39666 /* SGKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A4F3AC139BD72300F39666 /* SGKeyCombo.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AABE497C09FF9CD000A6A239 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = AABE497B09FF9CD000A6A239 /* AppController.m */; };
 		AAFAC85F0A1BD9DD00DC6025 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFAC84A0A1BD9DD00DC6025 /* Carbon.framework */; };
 		DB46BEEB143466ED0025EA0E /* DBUserDefaults.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB46BEEA143466ED0025EA0E /* DBUserDefaults.framework */; };
-		DB46BEEF14346A7C0025EA0E /* DBUserDefaultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = DB46BEED14346A7C0025EA0E /* DBUserDefaultsController.h */; };
-		DB46BEF014346A7C0025EA0E /* DBUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB46BEEE14346A7C0025EA0E /* DBUserDefaultsController.m */; };
 		DB46BEF114346B2F0025EA0E /* DBUserDefaults.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DB46BEEA143466ED0025EA0E /* DBUserDefaults.framework */; };
-		DB46BEF314346C660025EA0E /* DBSyncPromptDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = DB46BEF214346C660025EA0E /* DBSyncPromptDelegate.h */; };
-		DB46BEF514346C6D0025EA0E /* DBUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = DB46BEF414346C6D0025EA0E /* DBUserDefaults.h */; };
 		DBEB0C9C1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = DBEB0C9A1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h */; };
 		DBEB0C9D1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEB0C9B1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m */; };
 /* End PBXBuildFile section */
@@ -111,22 +89,12 @@
 		63BB6CE11940DD050042A0E9 /* StatusHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StatusHighlighted@2x.png"; sourceTree = "<group>"; };
 		773ABFAF13E9AA1A00AE3969 /* NSWindow+TrueCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+TrueCenter.h"; sourceTree = "<group>"; };
 		773ABFB013E9AA1A00AE3969 /* NSWindow+TrueCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+TrueCenter.m"; sourceTree = "<group>"; };
-		7761C878139BDE7F000FB3AB /* JumpcutClipping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpcutClipping.h; sourceTree = "<group>"; };
-		7761C879139BDE7F000FB3AB /* JumpcutClipping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JumpcutClipping.m; sourceTree = "<group>"; };
-		7761C87A139BDE7F000FB3AB /* JumpcutStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JumpcutStore.h; sourceTree = "<group>"; };
-		7761C87B139BDE7F000FB3AB /* JumpcutStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JumpcutStore.m; sourceTree = "<group>"; };
-		7761C881139BDE94000FB3AB /* LoginItemsAE.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LoginItemsAE.c; sourceTree = "<group>"; };
-		7761C882139BDE94000FB3AB /* LoginItemsAE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItemsAE.h; sourceTree = "<group>"; };
-		7761C883139BDE94000FB3AB /* UKLoginItemRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKLoginItemRegistry.h; sourceTree = "<group>"; };
-		7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKLoginItemRegistry.m; sourceTree = "<group>"; };
 		7761C88A139BDEAF000FB3AB /* BezelWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezelWindow.h; sourceTree = "<group>"; };
 		7761C88B139BDEAF000FB3AB /* BezelWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezelWindow.m; sourceTree = "<group>"; };
 		7761C88C139BDEAF000FB3AB /* RoundRecBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundRecBezierPath.h; sourceTree = "<group>"; };
 		7761C88D139BDEAF000FB3AB /* RoundRecBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundRecBezierPath.m; sourceTree = "<group>"; };
 		7761C88E139BDEAF000FB3AB /* RoundRecTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundRecTextField.h; sourceTree = "<group>"; };
 		7761C88F139BDEAF000FB3AB /* RoundRecTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundRecTextField.m; sourceTree = "<group>"; };
-		7761C897139BDEC4000FB3AB /* UKPrefsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKPrefsPanel.h; sourceTree = "<group>"; };
-		7761C898139BDEC4000FB3AB /* UKPrefsPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKPrefsPanel.m; sourceTree = "<group>"; };
 		7761C8CD139BE06B000FB3AB /* com.generalarcade.flycut.16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.16.png; path = Resources/com.generalarcade.flycut.16.png; sourceTree = "<group>"; };
 		7761C8CE139BE06B000FB3AB /* com.generalarcade.flycut.32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.32.png; path = Resources/com.generalarcade.flycut.32.png; sourceTree = "<group>"; };
 		7761C8D1139BE06B000FB3AB /* jumpcut.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = jumpcut.icns; path = Resources/jumpcut.icns; sourceTree = "<group>"; };
@@ -142,23 +110,11 @@
 		7761C8EB139BE09D000FB3AB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7794D3D4139BF28B0047E862 /* flycut.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = flycut.icns; sourceTree = "<group>"; };
 		7794D3D6139BF2B10047E862 /* flycut.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = flycut.icns; sourceTree = "<group>"; };
-		77A4F3A5139BD72300F39666 /* SGHotKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGHotKey.h; sourceTree = "<group>"; };
-		77A4F3A6139BD72300F39666 /* SGHotKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGHotKey.m; sourceTree = "<group>"; };
-		77A4F3A7139BD72300F39666 /* SGHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGHotKeyCenter.h; sourceTree = "<group>"; };
-		77A4F3A8139BD72300F39666 /* SGHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGHotKeyCenter.m; sourceTree = "<group>"; };
-		77A4F3A9139BD72300F39666 /* SGKeyCodeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGKeyCodeTranslator.h; sourceTree = "<group>"; };
-		77A4F3AA139BD72300F39666 /* SGKeyCodeTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGKeyCodeTranslator.m; sourceTree = "<group>"; };
-		77A4F3AB139BD72300F39666 /* SGKeyCombo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGKeyCombo.h; sourceTree = "<group>"; };
-		77A4F3AC139BD72300F39666 /* SGKeyCombo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGKeyCombo.m; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Superego.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Superego.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AABE497A09FF9CD000A6A239 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		AABE497B09FF9CD000A6A239 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		AAFAC84A0A1BD9DD00DC6025 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		DB46BEEA143466ED0025EA0E /* DBUserDefaults.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DBUserDefaults.framework; sourceTree = "<group>"; };
-		DB46BEED14346A7C0025EA0E /* DBUserDefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBUserDefaultsController.h; sourceTree = "<group>"; };
-		DB46BEEE14346A7C0025EA0E /* DBUserDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBUserDefaultsController.m; sourceTree = "<group>"; };
-		DB46BEF214346C660025EA0E /* DBSyncPromptDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DBSyncPromptDelegate.h; path = ../DBUserDefaults.framework/Headers/DBSyncPromptDelegate.h; sourceTree = "<group>"; };
-		DB46BEF414346C6D0025EA0E /* DBUserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DBUserDefaults.h; path = ../DBUserDefaults.framework/Headers/DBUserDefaults.h; sourceTree = "<group>"; };
 		DBEB0C9A1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+ULIZoomEffect.h"; sourceTree = "<group>"; };
 		DBEB0C9B1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+ULIZoomEffect.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,14 +136,9 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DB46BEEC14346A7C0025EA0E /* DBUserDefaultsController */,
 				AABE497A09FF9CD000A6A239 /* AppController.h */,
 				AABE497B09FF9CD000A6A239 /* AppController.m */,
-				7761C896139BDEC4000FB3AB /* UKPrefsPanel */,
 				7761C889139BDEAF000FB3AB /* UI */,
-				7761C880139BDE94000FB3AB /* LoginItem */,
-				7761C877139BDE7F000FB3AB /* JumpcutEngine */,
-				77A4F3A4139BD72300F39666 /* SGHotKeysLib */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -278,28 +229,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7761C877139BDE7F000FB3AB /* JumpcutEngine */ = {
-			isa = PBXGroup;
-			children = (
-				7761C878139BDE7F000FB3AB /* JumpcutClipping.h */,
-				7761C879139BDE7F000FB3AB /* JumpcutClipping.m */,
-				7761C87A139BDE7F000FB3AB /* JumpcutStore.h */,
-				7761C87B139BDE7F000FB3AB /* JumpcutStore.m */,
-			);
-			path = JumpcutEngine;
-			sourceTree = "<group>";
-		};
-		7761C880139BDE94000FB3AB /* LoginItem */ = {
-			isa = PBXGroup;
-			children = (
-				7761C881139BDE94000FB3AB /* LoginItemsAE.c */,
-				7761C882139BDE94000FB3AB /* LoginItemsAE.h */,
-				7761C883139BDE94000FB3AB /* UKLoginItemRegistry.h */,
-				7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */,
-			);
-			path = LoginItem;
-			sourceTree = "<group>";
-		};
 		7761C889139BDEAF000FB3AB /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,41 +246,6 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		7761C896139BDEC4000FB3AB /* UKPrefsPanel */ = {
-			isa = PBXGroup;
-			children = (
-				7761C897139BDEC4000FB3AB /* UKPrefsPanel.h */,
-				7761C898139BDEC4000FB3AB /* UKPrefsPanel.m */,
-			);
-			path = UKPrefsPanel;
-			sourceTree = "<group>";
-		};
-		77A4F3A4139BD72300F39666 /* SGHotKeysLib */ = {
-			isa = PBXGroup;
-			children = (
-				77A4F3A5139BD72300F39666 /* SGHotKey.h */,
-				77A4F3A6139BD72300F39666 /* SGHotKey.m */,
-				77A4F3A7139BD72300F39666 /* SGHotKeyCenter.h */,
-				77A4F3A8139BD72300F39666 /* SGHotKeyCenter.m */,
-				77A4F3A9139BD72300F39666 /* SGKeyCodeTranslator.h */,
-				77A4F3AA139BD72300F39666 /* SGKeyCodeTranslator.m */,
-				77A4F3AB139BD72300F39666 /* SGKeyCombo.h */,
-				77A4F3AC139BD72300F39666 /* SGKeyCombo.m */,
-			);
-			path = SGHotKeysLib;
-			sourceTree = "<group>";
-		};
-		DB46BEEC14346A7C0025EA0E /* DBUserDefaultsController */ = {
-			isa = PBXGroup;
-			children = (
-				DB46BEED14346A7C0025EA0E /* DBUserDefaultsController.h */,
-				DB46BEEE14346A7C0025EA0E /* DBUserDefaultsController.m */,
-				DB46BEF214346C660025EA0E /* DBSyncPromptDelegate.h */,
-				DB46BEF414346C6D0025EA0E /* DBUserDefaults.h */,
-			);
-			path = DBUserDefaultsController;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -359,22 +253,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB46BEF314346C660025EA0E /* DBSyncPromptDelegate.h in Headers */,
-				DB46BEF514346C6D0025EA0E /* DBUserDefaults.h in Headers */,
-				77A4F3AD139BD72300F39666 /* SGHotKey.h in Headers */,
-				77A4F3AF139BD72300F39666 /* SGHotKeyCenter.h in Headers */,
-				77A4F3B1139BD72300F39666 /* SGKeyCodeTranslator.h in Headers */,
-				77A4F3B3139BD72300F39666 /* SGKeyCombo.h in Headers */,
-				7761C87C139BDE7F000FB3AB /* JumpcutClipping.h in Headers */,
-				7761C87E139BDE7F000FB3AB /* JumpcutStore.h in Headers */,
-				7761C886139BDE94000FB3AB /* LoginItemsAE.h in Headers */,
-				7761C887139BDE94000FB3AB /* UKLoginItemRegistry.h in Headers */,
 				7761C890139BDEAF000FB3AB /* BezelWindow.h in Headers */,
 				7761C892139BDEAF000FB3AB /* RoundRecBezierPath.h in Headers */,
 				7761C894139BDEAF000FB3AB /* RoundRecTextField.h in Headers */,
-				7761C899139BDEC4000FB3AB /* UKPrefsPanel.h in Headers */,
 				773ABFB113E9AA1A00AE3969 /* NSWindow+TrueCenter.h in Headers */,
-				DB46BEEF14346A7C0025EA0E /* DBUserDefaultsController.h in Headers */,
 				DBEB0C9C1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,20 +357,10 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				AABE497C09FF9CD000A6A239 /* AppController.m in Sources */,
-				77A4F3AE139BD72300F39666 /* SGHotKey.m in Sources */,
-				77A4F3B0139BD72300F39666 /* SGHotKeyCenter.m in Sources */,
-				77A4F3B2139BD72300F39666 /* SGKeyCodeTranslator.m in Sources */,
-				77A4F3B4139BD72300F39666 /* SGKeyCombo.m in Sources */,
-				7761C87D139BDE7F000FB3AB /* JumpcutClipping.m in Sources */,
-				7761C87F139BDE7F000FB3AB /* JumpcutStore.m in Sources */,
-				7761C885139BDE94000FB3AB /* LoginItemsAE.c in Sources */,
-				7761C888139BDE94000FB3AB /* UKLoginItemRegistry.m in Sources */,
 				7761C891139BDEAF000FB3AB /* BezelWindow.m in Sources */,
 				7761C893139BDEAF000FB3AB /* RoundRecBezierPath.m in Sources */,
 				7761C895139BDEAF000FB3AB /* RoundRecTextField.m in Sources */,
-				7761C89A139BDEC4000FB3AB /* UKPrefsPanel.m in Sources */,
 				773ABFB213E9AA1A00AE3969 /* NSWindow+TrueCenter.m in Sources */,
-				DB46BEF014346A7C0025EA0E /* DBUserDefaultsController.m in Sources */,
 				DBEB0C9D1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
