@@ -12,8 +12,6 @@
     
     // The menu attatched to same
     IBOutlet NSMenu *jcMenu;
-    IBOutlet NSSlider * heightSlider;
-    IBOutlet NSSlider * widthSlider;
     
     //Preferences
 	NSDictionary *standardPreferences;
