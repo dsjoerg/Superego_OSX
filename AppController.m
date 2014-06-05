@@ -1,10 +1,4 @@
-
-
 #import "AppController.h"
-#import "NSWindow+TrueCenter.h"
-#import "NSWindow+ULIZoomEffect.h"
-
-#define _DISPLENGTH 40
 
 @implementation AppController
 
@@ -40,7 +34,6 @@
 		[prefsPanel setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 	[NSApp activateIgnoringOtherApps: YES];
 	[prefsPanel makeKeyAndOrderFront:self];
-	issuedRememberResizeWarning = NO;
 }
 
 -(IBAction)toggleLoadOnStartup:(id)sender {
