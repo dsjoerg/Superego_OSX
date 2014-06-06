@@ -1,3 +1,7 @@
 ### Superego_OSX
 
-The OS X side of the Superego self-management system.
+### Get started
+
+* install CocoaPods
+* `pod install`
+* `open Superego.xcworkspace`

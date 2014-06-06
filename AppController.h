@@ -21,11 +21,9 @@
 -(void) hideApp;
 
 // Menu related
--(void) updateMenu;
 -(IBAction) activateAndOrderFrontStandardAboutPanel:(id)sender;
 
 // Preference related
 -(IBAction) showPreferencePanel:(id)sender;
--(IBAction) toggleLoadOnStartup:(id)sender;
 
 @end
