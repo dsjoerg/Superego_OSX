@@ -13,6 +13,9 @@
     // The menu attatched to same
     IBOutlet NSMenu *jcMenu;
     
+    // The menu item where we show what time tonight's curfew is
+    IBOutlet NSMenuItem *curfewMenuItem;
+    
     //Preferences
 	NSDictionary *standardPreferences;
 }

@@ -3,6 +3,7 @@
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
 #import "AFHTTPClient.h"
+#import "AFJSONRequestOperation.h"
 
 @implementation AppController
 
@@ -27,7 +28,9 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	
 	[NSApp activateIgnoringOtherApps: YES];
     
-    [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(wakeUpAndDoStuff) userInfo:nil repeats:YES];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(wakeUpAndDoStuff) userInfo:nil repeats:YES];
+    // fire it once right away to get things off on the right foot
+    [timer fire];
 }
 
 -(void) killEverythingDead
@@ -49,7 +52,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
--(void) wakeUpAndDoStuff
+-(NSString *)baseServerURL
 {
     BOOL developmentServer = YES;
     NSString *protocol;
@@ -62,11 +65,46 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
         protocol = @"https";
         apiHost = @"superego.herokuapp.com";
     }
-    NSString *urlString = [NSString stringWithFormat:@"%@://%@", protocol, apiHost];
+    return [NSString stringWithFormat:@"%@://%@", protocol, apiHost];
+}
+
+-(NSString *)curfewActivePath
+{
+    return @"/api/v1/curfew/is_active";
+}
+
+-(NSString *)curfewPath
+{
+    return @"/api/v1/curfew/compute";
+}
+
+-(NSString *) curfewFromJSON:(id)JSON
+{
+    NSArray *values = [JSON allValues];
+    return values[0];
+}
+
+-(void) updateDisplayedCurfew
+{
+    NSString *requestString = [NSString stringWithFormat:@"%@/%@", [self baseServerURL], [self curfewPath]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        NSString *curfew = [self curfewFromJSON:JSON];
+        NSString *menuTitle = [NSString stringWithFormat:@"Curfew: %@", curfew];
+        [curfewMenuItem setTitle:menuTitle];
+
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        DDLogDebug(@"Failed! With error %@", error);
+    }];
+    [operation start];
+}
+
+-(void) killEverythingIfAfterCurfew
+{
+
     
-    // hit superego server and find out whether we need to kill everything
-    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:urlString]];
-    [client getPath:@"/api/v1/curfew/is_active" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:[self baseServerURL]]];
+    [client getPath:[self curfewActivePath] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         DDLogDebug(@"Got an answer! %@", responseString);
         if ([responseString isEqualToString:@"true"]) {
@@ -75,6 +113,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         DDLogDebug(@"Failed! With error %@", error);
     }];
+}
+
+-(void) wakeUpAndDoStuff
+{
+    [self updateDisplayedCurfew];
+    [self killEverythingIfAfterCurfew];
 }
 
 -(IBAction) activateAndOrderFrontStandardAboutPanel:(id)sender

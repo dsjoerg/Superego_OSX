@@ -5,13 +5,19 @@ PODS:
   - CocoaLumberjack/Core (1.9.0)
   - CocoaLumberjack/Extensions (1.9.0):
     - CocoaLumberjack/Core
+  - yajl (1.0.12)
+  - yajl-objc (0.2.27):
+    - yajl (~> 1.0.11)
 
 DEPENDENCIES:
   - AFNetworking (= 0.10.1)
   - CocoaLumberjack (~> 1.9.0)
+  - yajl-objc (~> 0.2)
 
 SPEC CHECKSUMS:
   AFNetworking: e4f53a4734a39d58809cb19a71b4cbcc3eb60176
   CocoaLumberjack: 5766cdd1d0a24bcf15a133c6023747346bf786dd
+  yajl: 8e9ab114ab8e463a34ad5937e31431be6a0be97e
+  yajl-objc: 3105751f464121bf2e9003f5ed623d7df4a3684e
 
 COCOAPODS: 0.33.1
