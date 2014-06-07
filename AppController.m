@@ -2,7 +2,7 @@
 #import "DDLog.h"
 #import "DDTTYLogger.h"
 #import "DDFileLogger.h"
-
+#import "AFHTTPClient.h"
 
 @implementation AppController
 
@@ -30,22 +30,51 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(wakeUpAndDoStuff) userInfo:nil repeats:YES];
 }
 
--(void) wakeUpAndDoStuff
+-(void) killEverythingDead
 {
     NSArray *runningApplications = [[NSWorkspace sharedWorkspace] runningApplications];
     
     DDLogDebug(@"Hi! There are %lu running applications.", (unsigned long)[runningApplications count]);
-    NSArray *killThese = @[@"Safari", @"Firefox", @"Google Chrome", @"StarCraft II", @"Hearthstone"];
+    
+    //    NSArray *killThese = @[@"Safari", @"Firefox", @"Google Chrome", @"StarCraft II", @"Hearthstone"];
+    NSArray *killThese = @[@"Safari", @"Firefox", @"StarCraft II", @"Hearthstone"];
+    
     for (NSRunningApplication *app in runningApplications) {
-//        DDLogDebug(@"%d: %@ %@", [app processIdentifier], [app localizedName], [app bundleIdentifier]);
+        //        DDLogDebug(@"%d: %@ %@", [app processIdentifier], [app localizedName], [app bundleIdentifier]);
         if ([killThese containsObject:[app localizedName]]) {
             DDLogDebug(@"Killing %@", [app localizedName]);
             BOOL result = [app terminate];
             DDLogDebug(@"And... %hhd", result);
-//            result = [app forceTerminate];
-//            DDLogDebug(@"Also... %hhd", result);
         }
     }
+}
+
+-(void) wakeUpAndDoStuff
+{
+    BOOL developmentServer = YES;
+    NSString *protocol;
+    NSString *apiHost;
+    
+    if (developmentServer) {
+        protocol = @"http";
+        apiHost = @"localhost:3000";
+    } else {
+        protocol = @"https";
+        apiHost = @"superego.herokuapp.com";
+    }
+    NSString *urlString = [NSString stringWithFormat:@"%@://%@", protocol, apiHost];
+    
+    // hit superego server and find out whether we need to kill everything
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:urlString]];
+    [client getPath:@"/api/v1/curfew/is_active" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        DDLogDebug(@"Got an answer! %@", responseString);
+        if ([responseString isEqualToString:@"true"]) {
+            [self killEverythingDead];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogDebug(@"Failed! With error %@", error);
+    }];
 }
 
 -(IBAction) activateAndOrderFrontStandardAboutPanel:(id)sender

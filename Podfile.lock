@@ -1,4 +1,5 @@
 PODS:
+  - AFNetworking (0.10.1)
   - CocoaLumberjack (1.9.0):
     - CocoaLumberjack/Extensions
   - CocoaLumberjack/Core (1.9.0)
@@ -6,9 +7,11 @@ PODS:
     - CocoaLumberjack/Core
 
 DEPENDENCIES:
+  - AFNetworking (= 0.10.1)
   - CocoaLumberjack (~> 1.9.0)
 
 SPEC CHECKSUMS:
+  AFNetworking: e4f53a4734a39d58809cb19a71b4cbcc3eb60176
   CocoaLumberjack: 5766cdd1d0a24bcf15a133c6023747346bf786dd
 
 COCOAPODS: 0.33.1
