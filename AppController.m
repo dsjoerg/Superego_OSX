@@ -15,22 +15,43 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 	return [super init];
 }
 
-- (void)awakeFromNib
+
+-(void) setupLogging
 {
-	// Build the statusbar menu
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    
+    [DDLog addLogger:fileLogger];
+}
+
+- (void)buildStatusBarMenu
+{
     statusItem = [[[NSStatusBar systemStatusBar]
-            statusItemWithLength:NSVariableStatusItemLength] retain];
+                   statusItemWithLength:NSVariableStatusItemLength] retain];
     [statusItem setHighlightMode:YES];
     id theImage = [NSImage imageNamed:@"Status"];
     [statusItem setImage:theImage];
 	[statusItem setMenu:jcMenu];
     [statusItem setEnabled:YES];
+}
+
+- (void)awakeFromNib
+{
+    [self setupLogging];
+    [self buildStatusBarMenu];
 	
 	[NSApp activateIgnoringOtherApps: YES];
     
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(wakeUpAndDoStuff) userInfo:nil repeats:YES];
     // fire it once right away to get things off on the right foot
     [timer fire];
+    
+    DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
+    [self writeLaunchAgentFile];
+    [self loadLaunchAgent];
 }
 
 -(void) killEverythingDead
@@ -101,8 +122,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 -(void) killEverythingIfAfterCurfew
 {
-
-    
     AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:[self baseServerURL]]];
     [client getPath:[self curfewActivePath] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -138,13 +157,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    
-    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    
-    [DDLog addLogger:fileLogger];
 }
 
 
@@ -158,5 +170,57 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 }
 
+-(NSMutableDictionary *) propertyListForSuperegoLaunchAgent
+{
+    NSString *appPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/MacOS/Superego"];
+    NSMutableDictionary *rootObj = [NSMutableDictionary dictionaryWithCapacity:2];
+    [rootObj setObject:@"com.davidjoerg.superego" forKey:@"Label"];
+
+    // Deprecated as of OS X 10.5: https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man5/launchd.plist.5.html
+    //    [rootObj setObject:@NO forKey:@"OnDemand"];
+
+    [rootObj setObject:@YES forKey:@"KeepAlive"];
+
+    [rootObj setObject:@[appPath] forKey:@"ProgramArguments"];
+
+    return rootObj;
+}
+
+-(NSString *)launchAgentFilePath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    if ([paths count] == 0) {
+        DDLogError(@"Can't find where to put the LaunchAgent file");
+        return nil;
+    }
+    NSString *basePath = [paths objectAtIndex:0];
+    return [[basePath stringByAppendingPathComponent:@"LaunchAgents"] stringByAppendingPathComponent:@"com.davidjoerg.superego.plist"];
+}
+
+-(void) writeLaunchAgentFile
+{
+    NSString *error;
+    NSString *launchAgentFilePath = [self launchAgentFilePath];
+    if (launchAgentFilePath) {
+        NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:[self propertyListForSuperegoLaunchAgent] format:NSPropertyListXMLFormat_v1_0 errorDescription:&error];
+        [plistData writeToFile:launchAgentFilePath atomically:YES];
+    }
+}
+
+-(void) loadLaunchAgent
+{
+    // ARGH is there a way to load a LaunchAgent without triggering a re-launch of the process?!?
+
+    // http://stackoverflow.com/questions/16056831/using-launchctl-in-from-nstask
+    NSTask *task;
+    task = [[NSTask alloc] init];
+    [task setLaunchPath: @"/bin/launchctl"];
+    
+    NSArray *arguments;
+    arguments = [NSArray arrayWithObjects: @"load", [self launchAgentFilePath], nil];
+    [task setArguments: arguments];
+    
+    [task launch];
+}
 
 @end
