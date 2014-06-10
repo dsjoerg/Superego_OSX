@@ -158,7 +158,7 @@ static const NSString *emailPrefsKey = @"email";
     
     DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
     [self writeLaunchAgentFile];
-//    [self loadLaunchAgentAndDie];
+    [self loadLaunchAgentAndDie];
 }
 
 
