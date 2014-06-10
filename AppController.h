@@ -36,6 +36,6 @@
 // Termination that has been authorized by entering the passcode
 -(IBAction) properTermination:(id)sender;
 
--(void) controlTextDidChange:(NSNotification *)aNotification;
+-(void) controlTextDidEndEditing:(NSNotification *)aNotification;
 
 @end

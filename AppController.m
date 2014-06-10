@@ -14,7 +14,7 @@ static const NSString *emailPrefsKey = @"email";
 
 - (id)init
 {
-	return [super init];
+    return [super init];
 }
 
 
@@ -36,7 +36,7 @@ static const NSString *emailPrefsKey = @"email";
     [statusItem setHighlightMode:YES];
     id theImage = [NSImage imageNamed:@"Status"];
     [statusItem setImage:theImage];
-	[statusItem setMenu:jcMenu];
+    [statusItem setMenu:jcMenu];
     [statusItem setEnabled:YES];
 }
 
@@ -135,10 +135,10 @@ static const NSString *emailPrefsKey = @"email";
 
 -(IBAction) showPreferencePanel:(id)sender
 {
-	if ([prefsPanel respondsToSelector:@selector(setCollectionBehavior:)])
-		[prefsPanel setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-	[NSApp activateIgnoringOtherApps: YES];
-	[prefsPanel makeKeyAndOrderFront:self];
+    if ([prefsPanel respondsToSelector:@selector(setCollectionBehavior:)])
+        [prefsPanel setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    [NSApp activateIgnoringOtherApps: YES];
+    [prefsPanel makeKeyAndOrderFront:self];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
@@ -164,12 +164,12 @@ static const NSString *emailPrefsKey = @"email";
 
 -(void)hideApp
 {
-	[NSApp hide:self];
+    [NSApp hide:self];
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-
+    DDLogDebug(@"appWillTerminate");
 }
 
 -(IBAction) properTermination:(id)sender;
@@ -225,7 +225,7 @@ static const NSString *emailPrefsKey = @"email";
     
     NSString *command = load ? @"load" : @"unload";
     NSArray *arguments;
-    arguments = [NSArray arrayWithObjects: command, [self launchAgentFilePath], nil];
+    arguments = @[command, [self launchAgentFilePath]];
     [task setArguments: arguments];
     NSPipe * out = [NSPipe pipe];
     [task setStandardError:out];
