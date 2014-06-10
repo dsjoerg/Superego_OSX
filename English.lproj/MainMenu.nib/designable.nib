@@ -32,7 +32,7 @@
                 </menuItem>
                 <menuItem title="Quit" id="212">
                     <connections>
-                        <action selector="terminate:" target="-2" id="216"/>
+                        <action selector="properTermination:" target="213" id="9Zb-d5-fK4"/>
                     </connections>
                 </menuItem>
             </items>

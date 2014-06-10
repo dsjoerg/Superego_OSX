@@ -29,4 +29,7 @@
 // Preference related
 -(IBAction) showPreferencePanel:(id)sender;
 
+// Termination that has been authorized by entering the passcode
+-(IBAction) properTermination:(id)sender;
+
 @end

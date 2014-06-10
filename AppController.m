@@ -51,7 +51,7 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     
     DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
     [self writeLaunchAgentFile];
-    [self loadLaunchAgent];
+    [self loadLaunchAgentAndDie];
 }
 
 -(void) killEverythingDead
@@ -170,6 +170,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 }
 
+-(IBAction) properTermination:(id)sender;
+{
+    NSString *unloadResult = [self launchAgentLoad:NO];
+    DDLogDebug(@"Unloading, result=%@", unloadResult);
+    [[NSApplication sharedApplication] terminate:nil];
+}
+
 -(NSMutableDictionary *) propertyListForSuperegoLaunchAgent
 {
     NSString *appPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/MacOS/Superego"];
@@ -207,20 +214,47 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     }
 }
 
--(void) loadLaunchAgent
+-(NSString *) launchAgentLoad:(BOOL)load
 {
-    // ARGH is there a way to load a LaunchAgent without triggering a re-launch of the process?!?
-
     // http://stackoverflow.com/questions/16056831/using-launchctl-in-from-nstask
     NSTask *task;
     task = [[NSTask alloc] init];
     [task setLaunchPath: @"/bin/launchctl"];
     
+    NSString *command = load ? @"load" : @"unload";
     NSArray *arguments;
-    arguments = [NSArray arrayWithObjects: @"load", [self launchAgentFilePath], nil];
+    arguments = [NSArray arrayWithObjects: command, [self launchAgentFilePath], nil];
     [task setArguments: arguments];
+    NSPipe * out = [NSPipe pipe];
+    [task setStandardError:out];
     
     [task launch];
+    [task waitUntilExit];
+    [task release];
+    
+    NSFileHandle *read = [out fileHandleForReading];
+    NSData *dataRead = [read readDataToEndOfFile];
+    NSString *loadStatusMessage = [[[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding] autorelease];
+
+    return loadStatusMessage;
+}
+
+-(void) loadLaunchAgentAndDie
+{
+    NSString *loadStatusMessage = [self launchAgentLoad:YES];
+    
+    DDLogDebug(@"load command returned string of length %lu: %@", (unsigned long)[loadStatusMessage length], loadStatusMessage);
+    
+    if ([loadStatusMessage length] == 0) {
+        // load succeeded. this also causes a copy of ourselves to be launched.
+        // time for us to die.  the launchctl-launched version will live on.
+        [[NSApplication sharedApplication] terminate:nil];
+    }
+    // the message might be:
+    // "Already loaded"
+    // or
+    // "Some shit went totally wrong"
+    // we should complain to DJ if something went wrong.
 }
 
 @end
