@@ -61,7 +61,7 @@ static const NSString *emailPrefsKey = @"email";
 
 -(NSString *)baseServerURL
 {
-    BOOL developmentServer = YES;
+    BOOL developmentServer = NO;
     NSString *protocol;
     NSString *apiHost;
     
