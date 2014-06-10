@@ -10,6 +10,8 @@
 // Log levels: off, error, warn, info, verbose
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
+static const NSString *emailPrefsKey = @"email";
+
 - (id)init
 {
 	return [super init];
@@ -36,22 +38,6 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     [statusItem setImage:theImage];
 	[statusItem setMenu:jcMenu];
     [statusItem setEnabled:YES];
-}
-
-- (void)awakeFromNib
-{
-    [self setupLogging];
-    [self buildStatusBarMenu];
-	
-	[NSApp activateIgnoringOtherApps: YES];
-    
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(wakeUpAndDoStuff) userInfo:nil repeats:YES];
-    // fire it once right away to get things off on the right foot
-    [timer fire];
-    
-    DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
-    [self writeLaunchAgentFile];
-    [self loadLaunchAgentAndDie];
 }
 
 -(void) killEverythingDead
@@ -91,12 +77,12 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 -(NSString *)curfewActivePath
 {
-    return @"/api/v1/curfew/is_active";
+    return [NSString stringWithFormat:@"/api/v1/curfew/is_active?email=%@", email];
 }
 
 -(NSString *)curfewPath
 {
-    return @"/api/v1/curfew/compute";
+    return [NSString stringWithFormat:@"/api/v1/curfew/compute?email=%@", email];
 }
 
 -(NSString *) curfewFromJSON:(id)JSON
@@ -157,6 +143,22 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
+    [self setupLogging];
+    [self buildStatusBarMenu];
+    
+    // gotta do this so that edit commands work as expected.
+    [NSApp setMainMenu:mainMenu];
+    
+    email = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)emailPrefsKey];
+    [emailTextField setStringValue:email];
+    
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(wakeUpAndDoStuff) userInfo:nil repeats:YES];
+    // fire it once right away to get things off on the right foot
+    [timer fire];
+    
+    DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
+    [self writeLaunchAgentFile];
+//    [self loadLaunchAgentAndDie];
 }
 
 
@@ -255,6 +257,14 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     // or
     // "Some shit went totally wrong"
     // we should complain to DJ if something went wrong.
+}
+
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+{
+    email = [[aNotification object] stringValue];
+    [[NSUserDefaults standardUserDefaults] setValue:email forKey:(NSString *)emailPrefsKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self wakeUpAndDoStuff];
 }
 
 @end

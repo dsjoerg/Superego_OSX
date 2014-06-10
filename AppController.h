@@ -13,11 +13,15 @@
     // The menu attatched to same
     IBOutlet NSMenu *jcMenu;
     
+    // The hidden main menu
+    IBOutlet NSMenu *mainMenu;
+
     // The menu item where we show what time tonight's curfew is
     IBOutlet NSMenuItem *curfewMenuItem;
     
-    //Preferences
-	NSDictionary *standardPreferences;
+    IBOutlet NSTextField *emailTextField;
+    
+    NSString *email;
 }
 
 // Basic functionality
@@ -31,5 +35,7 @@
 
 // Termination that has been authorized by entering the passcode
 -(IBAction) properTermination:(id)sender;
+
+-(void) controlTextDidChange:(NSNotification *)aNotification;
 
 @end
