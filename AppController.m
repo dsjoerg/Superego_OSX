@@ -4,6 +4,7 @@
 #import "DDFileLogger.h"
 #import "AFHTTPClient.h"
 #import "AFJSONRequestOperation.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation AppController
 
@@ -11,6 +12,8 @@
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 static const NSString *emailPrefsKey = @"email";
+static const NSString *passcodeMD5Key = @"passcodeMD5";
+
 
 - (id)init
 {
@@ -132,25 +135,40 @@ static const NSString *emailPrefsKey = @"email";
     [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
 }
 
+-(void) showPanel:(NSPanel *)panel
+{
+    if ([panel respondsToSelector:@selector(setCollectionBehavior:)])
+        [panel setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
+    [NSApp activateIgnoringOtherApps: YES];
+	[panel center];
+    [panel makeKeyAndOrderFront:self];
+}
 
 -(IBAction) showPreferencePanel:(id)sender
 {
-    if ([prefsPanel respondsToSelector:@selector(setCollectionBehavior:)])
-        [prefsPanel setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
-    [NSApp activateIgnoringOtherApps: YES];
-    [prefsPanel makeKeyAndOrderFront:self];
+	[self showPanel:prefsPanel];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     [self setupLogging];
     [self buildStatusBarMenu];
+	
+	// to reset your passcode when testing
+	[self setPasscodeToString:nil];
     
     // gotta do this so that edit commands work as expected.
     [NSApp setMainMenu:mainMenu];
     
     email = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)emailPrefsKey];
     [emailTextField setStringValue:email];
+	
+	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
+	if (passcodeMD5 != nil && [passcodeMD5 length] > 0) {
+		DDLogDebug(@"Passcode MD5 is %@", passcodeMD5);
+		[setPasscodeButton setTitle:@"Change Passcode"];
+		[setPasscodeButton setAction:@selector(showChangePasscodePanel:)];
+	}
     
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(wakeUpAndDoStuff) userInfo:nil repeats:YES];
     // fire it once right away to get things off on the right foot
@@ -158,7 +176,7 @@ static const NSString *emailPrefsKey = @"email";
     
     DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
     [self writeLaunchAgentFile];
-    [self loadLaunchAgentAndDie];
+//    [self loadLaunchAgentAndDie];
 }
 
 
@@ -202,7 +220,7 @@ static const NSString *emailPrefsKey = @"email";
         DDLogError(@"Can't find where to put the LaunchAgent file");
         return nil;
     }
-    NSString *basePath = [paths objectAtIndex:0];
+    NSString *basePath = paths[0];
     return [[basePath stringByAppendingPathComponent:@"LaunchAgents"] stringByAppendingPathComponent:@"com.davidjoerg.superego.plist"];
 }
 
@@ -259,12 +277,109 @@ static const NSString *emailPrefsKey = @"email";
     // we should complain to DJ if something went wrong.
 }
 
-- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+- (void)updateEmailFromTextField
 {
-    email = [[aNotification object] stringValue];
+    email = [emailTextField stringValue];
     [[NSUserDefaults standardUserDefaults] setValue:email forKey:(NSString *)emailPrefsKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self wakeUpAndDoStuff];
 }
+
+- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+{
+	DDLogDebug(@"controlTextDidEndEditing");
+	[self updateEmailFromTextField];
+}
+
+- (void)windowDidResignKey:(NSNotification *)aNotification
+{
+	DDLogDebug(@"windowDidResignKey");
+	[self updateEmailFromTextField];
+}
+
+-(IBAction) showSetPasscodePanel:(id)sender
+{
+	DDLogDebug(@"show set passcode panel");
+	[firstPasscodeEntry setStringValue:@""];
+	[secondPasscodeEntry setStringValue:@""];
+	[self showPanel:setPasscodePanel];
+}
+
+-(IBAction) showChangePasscodePanel:(id)sender
+{
+	[oldPasscodeEntry setStringValue:@""];
+	[newFirstPasscodeEntry setStringValue:@""];
+	[newSecondPasscodeEntry setStringValue:@""];
+	[self showPanel:changePasscodePanel];
+}
+
+-(NSString *) md5hash:(NSString *)someNSString
+{
+	const char *cStr = [someNSString UTF8String];
+	unsigned char resultChar[16];
+	CC_MD5( cStr, strlen(cStr), resultChar);
+	NSString *md5 = [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+                 resultChar[0], resultChar[1], resultChar[2], resultChar[3],
+                 resultChar[4], resultChar[5], resultChar[6], resultChar[7],
+                 resultChar[8], resultChar[9], resultChar[10], resultChar[11],
+                 resultChar[12], resultChar[13], resultChar[14], resultChar[15]];
+	return md5;
+}
+
+-(void) setPasscodeToString:(NSString *)passcode
+{
+	if (passcode == nil) {
+		DDLogWarn(@"Clearing passcode!");
+		[[NSUserDefaults standardUserDefaults] setValue:nil forKey:(NSString *)passcodeMD5Key];
+		[setPasscodeButton setTitle:@"Set Passcode"];
+		[setPasscodeButton setAction:@selector(showSetPasscodePanel:)];
+	} else {
+		[[NSUserDefaults standardUserDefaults] setValue:[self md5hash:passcode] forKey:(NSString *)passcodeMD5Key];
+		[setPasscodeButton setTitle:@"Change Passcode"];
+		[setPasscodeButton setAction:@selector(showChangePasscodePanel:)];
+	}
+}
+
+-(IBAction) setPasscode:(id)sender
+{
+	NSString *firstPasscode = [firstPasscodeEntry stringValue];
+	NSString *secondPasscode = [secondPasscodeEntry stringValue];
+	DDLogDebug(@"set passcode! %@ %@", firstPasscode, secondPasscode);
+	
+	if ([firstPasscode isEqualToString:secondPasscode]) {
+		[self setPasscodeToString:firstPasscode];
+		[passcodeDoesntMatch setHidden:YES];
+		[setPasscodePanel close];
+	} else {
+		[passcodeDoesntMatch setHidden:NO];
+	}
+}
+
+-(IBAction) changePasscode:(id)sender
+{
+	NSString *oldPasscode = [oldPasscodeEntry stringValue];
+	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
+	if (![[self md5hash:oldPasscode] isEqualToString:passcodeMD5]) {
+		[oldPasscodeNotCorrect setHidden:NO];
+		return;
+	} else {
+		[oldPasscodeNotCorrect setHidden:YES];
+	}
+	
+	NSString *firstPasscode = [newFirstPasscodeEntry stringValue];
+	NSString *secondPasscode = [newSecondPasscodeEntry stringValue];
+	DDLogDebug(@"change passcode! %@ %@", firstPasscode, secondPasscode);
+	
+	if ([firstPasscode isEqualToString:secondPasscode]) {
+		[self setPasscodeToString:firstPasscode];
+		[newPasscodeDoesntMatch setHidden:YES];
+		[changePasscodePanel close];
+	} else {
+		[newPasscodeDoesntMatch setHidden:NO];
+	}
+}
+
+
+
 
 @end

@@ -40,25 +40,37 @@
         </menu>
         <customObject id="213" userLabel="AppController" customClass="AppController">
             <connections>
+                <outlet property="changePasscodePanel" destination="4rF-p3-RZ4" id="u6q-Ah-hgB"/>
                 <outlet property="curfewMenuItem" destination="uS8-nJ-1J4" id="4FP-bg-STZ"/>
                 <outlet property="emailTextField" destination="PLW-hi-YE6" id="baf-c6-PzF"/>
+                <outlet property="enterPasscodePanel" destination="iKW-Wq-nTG" id="Hqd-zp-vpc"/>
+                <outlet property="firstPasscodeEntry" destination="cUA-Yy-oD0" id="JPV-vc-Rvc"/>
                 <outlet property="jcMenu" destination="206" id="215"/>
                 <outlet property="mainMenu" destination="rNM-jY-lft" id="vQz-oA-EAW"/>
+                <outlet property="newFirstPasscodeEntry" destination="nsN-LE-2PR" id="tW8-y6-rSS"/>
+                <outlet property="newPasscodeDoesntMatch" destination="Enc-cE-noR" id="9Yu-4t-Gpf"/>
+                <outlet property="newSecondPasscodeEntry" destination="uRl-x0-gPK" id="htP-1o-ISc"/>
+                <outlet property="oldPasscodeEntry" destination="VOE-DG-Bj8" id="h2J-Hz-v8h"/>
+                <outlet property="oldPasscodeNotCorrect" destination="MSi-MJ-BwU" id="b45-k9-B7l"/>
+                <outlet property="passcodeDoesntMatch" destination="lxW-B6-1t4" id="peu-Bg-Vbr"/>
                 <outlet property="prefsPanel" destination="218" id="220"/>
+                <outlet property="secondPasscodeEntry" destination="uyH-0H-vVp" id="3Ss-gv-0wF"/>
+                <outlet property="setPasscodeButton" destination="pLS-t6-gYw" id="lOY-Df-B03"/>
+                <outlet property="setPasscodePanel" destination="ZTb-5l-by8" id="2Vp-SW-Jpk"/>
             </connections>
         </customObject>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="218" userLabel="PrefsPanel" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="542" y="303" width="360" height="98"/>
+            <rect key="contentRect" x="542" y="303" width="360" height="234"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="219">
-                <rect key="frame" x="0.0" y="0.0" width="360" height="98"/>
+                <rect key="frame" x="0.0" y="0.0" width="360" height="234"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" id="PLW-hi-YE6">
-                        <rect key="frame" x="64" y="56" width="276" height="22"/>
+                        <rect key="frame" x="64" y="192" width="276" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="zjQ-G7-hUM">
                             <font key="font" metaFont="system"/>
@@ -70,7 +82,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ehU-mv-p3b">
-                        <rect key="frame" x="17" y="59" width="42" height="17"/>
+                        <rect key="frame" x="17" y="195" width="42" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Email:" id="Iny-8M-Xj6">
                             <font key="font" metaFont="system"/>
@@ -78,26 +90,34 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="CyV-Bx-bTo">
-                        <rect key="frame" x="17" y="26" width="220" height="17"/>
+                    <button verticalHuggingPriority="750" id="pLS-t6-gYw">
+                        <rect key="frame" x="14" y="13" width="332" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Emergency Curfew Override Code:" id="39H-uK-87a">
+                        <buttonCell key="cell" type="push" title="Set Passcode" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8iB-uQ-cfG">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="showSetPasscodePanel:" target="213" id="Nxj-67-toa"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="WbO-S8-xBR">
+                        <rect key="frame" x="17" y="49" width="326" height="107"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="pXK-XL-wb7">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">If you need extra protection against late-night computer use, you can set a Passcode.
+
+Be sure to hide the Passcode somewhere you can't easily get to at night.</string>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" id="3oQ-aw-WCY">
-                        <rect key="frame" x="242" y="23" width="96" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="uRT-nA-ciW">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="213" id="OY7-T1-6zw"/>
+            </connections>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="264" userLabel="Shared Defaults"/>
         <menu id="rNM-jY-lft" userLabel="Invisible Main Menu">
@@ -317,5 +337,185 @@
                 </menuItem>
             </items>
         </menu>
+        <window title="Set Passcode" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="ZTb-5l-by8" userLabel="Set Passcode" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="139" y="81" width="394" height="294"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <view key="contentView" id="csK-jF-qOs">
+                <rect key="frame" x="0.0" y="0.0" width="394" height="294"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="cUA-Yy-oD0">
+                        <rect key="frame" x="32" y="116" width="342" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Passcode" drawsBackground="YES" id="0gK-Kt-KCD">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="uyH-0H-vVp">
+                        <rect key="frame" x="32" y="80" width="342" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter Passcode Again" drawsBackground="YES" id="gyW-23-y29">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="Mcs-sE-n4U">
+                        <rect key="frame" x="29" y="155" width="326" height="119"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="bUu-eU-SNM">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Choose a Passcode you can't easily remember.  Write it down on multiple pieces of paper and put them in places you can't easily get to at night.
+
+Don't lose them!  If your Passcode is lost, it will take extraordinary measures to regain control of your computer.</string>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="ZnC-Ls-j60">
+                        <rect key="frame" x="125" y="18" width="145" height="39"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="squareTextured" title="Set Passcode" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jE8-cN-zh8">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setPasscode:" target="213" id="x4H-0b-Llq"/>
+                        </connections>
+                    </button>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="lxW-B6-1t4">
+                        <rect key="frame" x="29" y="64" width="155" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Passcode doesn't match" id="YwQ-pJ-dKZ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
+        <window title="Change Passcode" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="4rF-p3-RZ4" userLabel="Change Passcode" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="139" y="81" width="394" height="327"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <view key="contentView" id="c4d-5F-hDQ">
+                <rect key="frame" x="0.0" y="0.0" width="394" height="327"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="nsN-LE-2PR">
+                        <rect key="frame" x="32" y="105" width="342" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="New Passcode" drawsBackground="YES" id="I4W-rS-hpF">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="VOE-DG-Bj8">
+                        <rect key="frame" x="32" y="149" width="342" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Old Passcode" drawsBackground="YES" id="OiW-yc-RLV">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="uRl-x0-gPK">
+                        <rect key="frame" x="32" y="69" width="342" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter New Passcode Again" drawsBackground="YES" id="5ti-gs-Wn0">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="B3U-AN-V1L">
+                        <rect key="frame" x="29" y="188" width="326" height="119"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="rm7-j5-APm">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">Choose a Passcode you can't easily remember.  Write it down on multiple pieces of paper and put them in places you can't easily get to at night.
+
+Don't lose them!  If your Passcode is lost, it will take extraordinary measures to regain control of your computer.</string>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="RiL-FR-wDu">
+                        <rect key="frame" x="125" y="10" width="145" height="39"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="squareTextured" title="Change Passcode" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PuE-0m-5oB">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="changePasscode:" target="213" id="Tvp-YR-kHG"/>
+                        </connections>
+                    </button>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Enc-cE-noR">
+                        <rect key="frame" x="29" y="53" width="155" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Passcode doesn't match" id="DEE-FJ-0A4">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="MSi-MJ-BwU">
+                        <rect key="frame" x="29" y="133" width="150" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Passcode is not correct" id="9Mi-sj-F1E">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+        </window>
+        <window title="Enter Passcode" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="iKW-Wq-nTG" userLabel="Enter Passcode" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="139" y="81" width="394" height="151"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
+            <view key="contentView" id="flE-Ek-psr">
+                <rect key="frame" x="0.0" y="0.0" width="394" height="151"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="TE4-Kj-6Be">
+                        <rect key="frame" x="32" y="75" width="342" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Passcode" drawsBackground="YES" id="cI1-Gy-QH7">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="4wm-sJ-MLj">
+                        <rect key="frame" x="29" y="114" width="326" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You need to enter your Passcode to do that." id="j20-t4-fvI">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="H0j-i0-8J2">
+                        <rect key="frame" x="131" y="18" width="145" height="39"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="squareTextured" title="Enter Passcode" bezelStyle="texturedSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Wmx-kg-mmI">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                </subviews>
+            </view>
+        </window>
     </objects>
 </document>
