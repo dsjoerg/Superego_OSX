@@ -114,7 +114,6 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:[self baseServerURL]]];
     [client getPath:[self curfewActivePath] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        DDLogDebug(@"Got an answer! %@", responseString);
         if ([responseString isEqualToString:@"true"]) {
             [self killEverythingDead];
         }
@@ -146,6 +145,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 
 -(IBAction) showPreferencePanel:(id)sender
 {
+	[emailTextField setStringValue:email];
 	[self showPanel:prefsPanel];
 }
 
@@ -154,8 +154,10 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     [self setupLogging];
     [self buildStatusBarMenu];
 	
+	problemSound = [NSSound soundNamed:@"Basso"];
+	
 	// to reset your passcode when testing
-	[self setPasscodeToString:nil];
+//	[self setPasscodeToString:nil];
     
     // gotta do this so that edit commands work as expected.
     [NSApp setMainMenu:mainMenu];
@@ -165,7 +167,6 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 	
 	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
 	if (passcodeMD5 != nil && [passcodeMD5 length] > 0) {
-		DDLogDebug(@"Passcode MD5 is %@", passcodeMD5);
 		[setPasscodeButton setTitle:@"Change Passcode"];
 		[setPasscodeButton setAction:@selector(showChangePasscodePanel:)];
 	}
@@ -176,7 +177,9 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     
     DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
     [self writeLaunchAgentFile];
-//    [self loadLaunchAgentAndDie];
+	
+	// comment out during testing, but do not commit!
+    [self loadLaunchAgentAndDie];
 }
 
 
@@ -190,7 +193,37 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     DDLogDebug(@"appWillTerminate");
 }
 
--(IBAction) properTermination:(id)sender;
+// returns NO if a passcode has been set up and the user does not enter it.
+// otherwise YES
+-(BOOL) passcodeGateway:(NSString *)actionDescription
+{
+	BOOL clearedToProceed = YES;
+	
+	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
+	if (passcodeMD5 != nil) {
+//		DDLogDebug(@"before runModalForWindow");
+		[actionLabel setStringValue:[NSString stringWithFormat:@"You need to enter your Passcode to %@.", actionDescription]];
+		[self showPanel:enterPasscodePanel];
+		NSInteger modalResult = [NSApp runModalForWindow:enterPasscodePanel];
+		[enterPasscodePanel close];
+//		DDLogDebug(@"after runModalForWindow: %ld", (long)modalResult);
+		if (modalResult != NSModalResponseStop) {
+			clearedToProceed = NO;
+		}
+	}
+
+	DDLogWarn(@"passcodeGateway: %hhd", clearedToProceed);
+	return clearedToProceed;
+}
+
+-(IBAction) attemptToQuit:(id)sender
+{
+	if ([self passcodeGateway:@"quit"]) {
+		[self properTermination];
+	}
+}
+
+-(void) properTermination
 {
     NSString *unloadResult = [self launchAgentLoad:NO];
     DDLogDebug(@"Unloading, result=%@", unloadResult);
@@ -279,27 +312,33 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 
 - (void)updateEmailFromTextField
 {
-    email = [emailTextField stringValue];
-    [[NSUserDefaults standardUserDefaults] setValue:email forKey:(NSString *)emailPrefsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self wakeUpAndDoStuff];
+	NSString *desiredEmail = [emailTextField stringValue];
+	if ([desiredEmail isEqualToString:email]) {
+		return;
+	}
+
+	if ([self passcodeGateway:@"change your email address"]) {
+		email = desiredEmail;
+		[[NSUserDefaults standardUserDefaults] setValue:email forKey:(NSString *)emailPrefsKey];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+		[self wakeUpAndDoStuff];
+	} else {
+		[emailTextField setStringValue:email];
+	}
 }
 
-- (void)controlTextDidEndEditing:(NSNotification *)aNotification
+-(IBAction) setEmail:(id)sender
 {
-	DDLogDebug(@"controlTextDidEndEditing");
 	[self updateEmailFromTextField];
 }
 
-- (void)windowDidResignKey:(NSNotification *)aNotification
+- (void)controlTextDidBeginEditing:(NSNotification *)aNotification
 {
-	DDLogDebug(@"windowDidResignKey");
-	[self updateEmailFromTextField];
+	[setEmailButton setHidden:NO];
 }
 
 -(IBAction) showSetPasscodePanel:(id)sender
 {
-	DDLogDebug(@"show set passcode panel");
 	[firstPasscodeEntry setStringValue:@""];
 	[secondPasscodeEntry setStringValue:@""];
 	[self showPanel:setPasscodePanel];
@@ -344,13 +383,13 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 {
 	NSString *firstPasscode = [firstPasscodeEntry stringValue];
 	NSString *secondPasscode = [secondPasscodeEntry stringValue];
-	DDLogDebug(@"set passcode! %@ %@", firstPasscode, secondPasscode);
 	
 	if ([firstPasscode isEqualToString:secondPasscode]) {
 		[self setPasscodeToString:firstPasscode];
 		[passcodeDoesntMatch setHidden:YES];
 		[setPasscodePanel close];
 	} else {
+		[self problemBeep];
 		[passcodeDoesntMatch setHidden:NO];
 	}
 }
@@ -360,6 +399,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 	NSString *oldPasscode = [oldPasscodeEntry stringValue];
 	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
 	if (![[self md5hash:oldPasscode] isEqualToString:passcodeMD5]) {
+		[self problemBeep];
 		[oldPasscodeNotCorrect setHidden:NO];
 		return;
 	} else {
@@ -375,11 +415,33 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 		[newPasscodeDoesntMatch setHidden:YES];
 		[changePasscodePanel close];
 	} else {
+		[self problemBeep];
 		[newPasscodeDoesntMatch setHidden:NO];
 	}
 }
 
+-(IBAction) enterPasscode:(id)sender
+{
+	NSString *enteredPasscode = [passcodeEntry stringValue];
+	NSString *enteredPasscodeMD5 = [self md5hash:enteredPasscode];
+	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
+	if ([passcodeMD5 isEqualToString:enteredPasscodeMD5]) {
+		[[NSApplication sharedApplication] stopModal];
+	} else {
+		[self problemBeep];
+		[passcodeNotCorrect setHidden:NO];
+	}
+}
 
+-(IBAction) cancelEnterPasscode:(id)sender
+{
+	[[NSApplication sharedApplication] abortModal];
+}
+
+-(void) problemBeep
+{
+	[problemSound play];
+}
 
 
 @end

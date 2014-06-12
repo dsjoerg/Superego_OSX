@@ -20,6 +20,7 @@
     IBOutlet NSMenuItem *curfewMenuItem;
     
     IBOutlet NSTextField *emailTextField;
+	IBOutlet NSButton *setEmailButton;
 	IBOutlet NSButton *setPasscodeButton;
 	
 	IBOutlet NSPanel *setPasscodePanel;
@@ -36,7 +37,13 @@
 	IBOutlet NSTextField *newSecondPasscodeEntry;
     IBOutlet NSTextField *newPasscodeDoesntMatch;
 
+	IBOutlet NSTextField *actionLabel;
+	IBOutlet NSTextField *passcodeEntry;
+	IBOutlet NSTextField *passcodeNotCorrect;
+	
     NSString *email;
+	
+	id problemSound;
 }
 
 // Basic functionality
@@ -48,13 +55,16 @@
 // Preference related
 -(IBAction) showPreferencePanel:(id)sender;
 
-// Termination that has been authorized by entering the passcode
--(IBAction) properTermination:(id)sender;
+-(IBAction) attemptToQuit:(id)sender;
 
 -(IBAction) showSetPasscodePanel:(id)sender;
 -(IBAction) showChangePasscodePanel:(id)sender;
 
 -(IBAction) setPasscode:(id)sender;
 -(IBAction) changePasscode:(id)sender;
+
+-(IBAction) enterPasscode:(id)sender;
+-(IBAction) cancelEnterPasscode:(id)sender;
+
 
 @end
