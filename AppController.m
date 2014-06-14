@@ -9,7 +9,7 @@
 @implementation AppController
 
 // Log levels: off, error, warn, info, verbose
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+static const int ddLogLevel = LOG_LEVEL_INFO;
 
 static const NSString *emailPrefsKey = @"email";
 static const NSString *passcodeMD5Key = @"passcodeMD5";
@@ -176,6 +176,20 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 	[self showPanel:prefsPanel];
 }
 
+-(void) confirmAppLocationAcceptable
+{
+	NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+	BOOL removable;
+	BOOL unmountable;
+	[[NSWorkspace sharedWorkspace] getFileSystemInfoForPath:bundlePath isRemovable:&removable isWritable:nil isUnmountable:&unmountable description:nil type:nil];
+
+	if (removable || unmountable) {
+		NSAlert *alert = [NSAlert alertWithMessageText:@"Please install Superego in the Applications directory, and run it from there." defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+		[alert runModal];
+		[[NSApplication sharedApplication] terminate:nil];
+	}
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     [self setupLogging];
@@ -211,6 +225,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     [timer fire];
     
     DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
+	[self confirmAppLocationAcceptable];
     [self writeLaunchAgentFile];
 	
 	if (![self djMode]) {
@@ -238,7 +253,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 		}
 	}
 
-	DDLogWarn(@"passcodeGateway: %hhd", clearedToProceed);
+//	DDLogDebug(@"passcodeGateway: %hhd", clearedToProceed);
 	return clearedToProceed;
 }
 
@@ -408,8 +423,10 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 		[[NSUserDefaults standardUserDefaults] setValue:nil forKey:(NSString *)passcodeMD5Key];
 		[setPasscodeButton setTitle:@"Set Passcode"];
 		[setPasscodeButton setAction:@selector(showSetPasscodePanel:)];
+		[[NSUserDefaults standardUserDefaults] synchronize];
 	} else {
 		[[NSUserDefaults standardUserDefaults] setValue:[self md5hash:passcode] forKey:(NSString *)passcodeMD5Key];
+		[[NSUserDefaults standardUserDefaults] synchronize];
 		[setPasscodeButton setTitle:@"Change Passcode"];
 		[setPasscodeButton setAction:@selector(showChangePasscodePanel:)];
 	}
