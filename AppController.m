@@ -462,6 +462,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 	NSString *enteredPasscodeMD5 = [self md5hash:enteredPasscode];
 	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
 	if ([passcodeMD5 isEqualToString:enteredPasscodeMD5]) {
+		[passcodeEntry setStringValue:@""];
 		[[NSApplication sharedApplication] stopModal];
 	} else {
 		[self problemBeep];
