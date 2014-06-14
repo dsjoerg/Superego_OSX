@@ -14,7 +14,7 @@
         <customObject id="-3" userLabel="Application"/>
         <menu title="Menu" id="206" userLabel="Menu Extra Menu">
             <items>
-                <menuItem title="Curfew Tonight: Unknown" id="uS8-nJ-1J4">
+                <menuItem title="Curfew: Unknown" id="uS8-nJ-1J4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem title="Preferences…" id="208">
@@ -105,7 +105,7 @@
                             <action selector="showSetPasscodePanel:" target="213" id="Nxj-67-toa"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="NO" id="WbO-S8-xBR">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="WbO-S8-xBR">
                         <rect key="frame" x="17" y="49" width="326" height="107"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="pXK-XL-wb7">
@@ -379,7 +379,7 @@ Be sure to hide the Passcode somewhere you can't easily get to at night.</string
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="NO" id="Mcs-sE-n4U">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="Mcs-sE-n4U">
                         <rect key="frame" x="29" y="155" width="326" height="119"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="bUu-eU-SNM">
@@ -453,7 +453,7 @@ DQ
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="NO" id="B3U-AN-V1L">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="B3U-AN-V1L">
                         <rect key="frame" x="29" y="188" width="326" height="119"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="rm7-j5-APm">

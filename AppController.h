@@ -46,9 +46,6 @@
 	id problemSound;
 }
 
-// Basic functionality
--(void) hideApp;
-
 // Menu related
 -(IBAction) activateAndOrderFrontStandardAboutPanel:(id)sender;
 

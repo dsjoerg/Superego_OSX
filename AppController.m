@@ -20,6 +20,10 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     return [super init];
 }
 
+- (BOOL)djMode
+{
+	return NO;
+}
 
 -(void) setupLogging
 {
@@ -49,8 +53,11 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     
     DDLogDebug(@"Hi! There are %lu running applications.", (unsigned long)[runningApplications count]);
     
-    //    NSArray *killThese = @[@"Safari", @"Firefox", @"Google Chrome", @"StarCraft II", @"Hearthstone"];
-    NSArray *killThese = @[@"Safari", @"Firefox", @"StarCraft II", @"Hearthstone"];
+    NSArray *killThese = @[@"Safari", @"Firefox", @"Google Chrome", @"StarCraft II", @"Hearthstone"];
+	if ([self djMode]) {
+		killThese = [killThese mutableCopy];
+		[(NSMutableArray *)killThese removeObject:@"Google Chrome"];
+	}
     
     for (NSRunningApplication *app in runningApplications) {
         //        DDLogDebug(@"%d: %@ %@", [app processIdentifier], [app localizedName], [app bundleIdentifier]);
@@ -105,6 +112,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         DDLogDebug(@"Failed! With error %@", error);
+		[curfewMenuItem setTitle:@"Curfew: Unknown"];
     }];
     [operation start];
 }
@@ -178,20 +186,11 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     DDLogDebug(@"Hi, currently executing from %@", [[NSBundle mainBundle] bundlePath]);
     [self writeLaunchAgentFile];
 	
-	// comment out during testing, but do not commit!
-    [self loadLaunchAgentAndDie];
+	if (![self djMode]) {
+		[self loadLaunchAgentAndDie];
+	}
 }
 
-
--(void)hideApp
-{
-    [NSApp hide:self];
-}
-
-
-- (void)applicationWillTerminate:(NSNotification *)notification {
-    DDLogDebug(@"appWillTerminate");
-}
 
 // returns NO if a passcode has been set up and the user does not enter it.
 // otherwise YES
@@ -201,12 +200,12 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 	
 	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
 	if (passcodeMD5 != nil) {
-//		DDLogDebug(@"before runModalForWindow");
 		[actionLabel setStringValue:[NSString stringWithFormat:@"You need to enter your Passcode to %@.", actionDescription]];
+		
 		[self showPanel:enterPasscodePanel];
 		NSInteger modalResult = [NSApp runModalForWindow:enterPasscodePanel];
 		[enterPasscodePanel close];
-//		DDLogDebug(@"after runModalForWindow: %ld", (long)modalResult);
+
 		if (modalResult != NSModalResponseStop) {
 			clearedToProceed = NO;
 		}
