@@ -6,6 +6,8 @@ version=$1
 
 echo "Releasing $version"
 
+git tag $version
+git push
 cp -r /Users/david/Dropbox/Daves_Docs/superego/releases/templatedir /Users/david/Dropbox/Daves_Docs/superego/releases/$version
 rm /Users/david/Dropbox/Daves_Docs/superego/releases/$version/Superego.dmg
 rm -rf /Users/david/Dropbox/Daves_Docs/superego/releases/$version/Superego/Superego.app

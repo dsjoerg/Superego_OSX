@@ -10,7 +10,5 @@
 
 * increment version number in nib
 * git commit
-* git tag <version number>
-* git push
 * clean-build new executable
 * scripts/release.sh <version>
