@@ -85,6 +85,16 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     return [NSString stringWithFormat:@"%@://%@", protocol, apiHost];
 }
 
+-(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+	BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+	NSString *stricterFilterString = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
+	NSString *laxString = @".+@([A-Za-z0-9]+\\.)+[A-Za-z]{2}[A-Za-z]*";
+	NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+	NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+	return [emailTest evaluateWithObject:checkString];
+}
+
 -(NSString *)curfewActivePath
 {
     return [NSString stringWithFormat:@"/api/v1/curfew/is_active?email=%@", email];
@@ -103,6 +113,10 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 
 -(void) updateDisplayedCurfew
 {
+	if (![self NSStringIsValidEmail:email]) {
+		return;
+	}
+	
     NSString *requestString = [NSString stringWithFormat:@"%@/%@", [self baseServerURL], [self curfewPath]];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestString]];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
@@ -119,6 +133,10 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 
 -(void) killEverythingIfAfterCurfew
 {
+	if (![self NSStringIsValidEmail:email]) {
+		return;
+	}
+
     AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:[self baseServerURL]]];
     [client getPath:[self curfewActivePath] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -314,6 +332,10 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 {
 	NSString *desiredEmail = [emailTextField stringValue];
 	if ([desiredEmail isEqualToString:email]) {
+		return;
+	}
+	if (![self NSStringIsValidEmail:desiredEmail]) {
+		[self problemBeep];
 		return;
 	}
 
