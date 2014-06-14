@@ -171,7 +171,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 
 -(IBAction) showPreferencePanel:(id)sender
 {
-	[emailTextField setStringValue:email];
+	[emailTextField setStringValue:email ? email : @""];
 	[setEmailButton setHidden:YES];
 	[self showPanel:prefsPanel];
 }
@@ -190,8 +190,10 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     [NSApp setMainMenu:mainMenu];
     
     email = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)emailPrefsKey];
-    [emailTextField setStringValue:email];
-	
+	if (email) {
+		[emailTextField setStringValue:email];
+	}
+		
 	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
 	if (passcodeMD5 != nil && [passcodeMD5 length] > 0) {
 		[setPasscodeButton setTitle:@"Change Passcode"];
