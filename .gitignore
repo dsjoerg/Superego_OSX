@@ -11,3 +11,4 @@ xcuserdata
 Pods/*
 *.xcworkspace
 !default.xcworkspace
+*~
