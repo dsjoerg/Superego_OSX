@@ -179,7 +179,13 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     [self setupLogging];
-    [self buildStatusBarMenu];
+
+	// to reset defaults when testing
+//	[[NSUserDefaults standardUserDefaults]
+//	 removePersistentDomainForName:@"com.davidjoerg.superego"];
+//	[[NSUserDefaults standardUserDefaults] synchronize];
+	
+	[self buildStatusBarMenu];
 	
 	problemSound = [NSSound soundNamed:@"Basso"];
 	
