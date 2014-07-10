@@ -105,6 +105,11 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     return [NSString stringWithFormat:@"/api/v1/curfew/compute?email=%@", email];
 }
 
+-(NSString *)resetPasscodePath
+{
+    return [NSString stringWithFormat:@"/api/v1/passcode/reset_required?email=%@", email];
+}
+
 -(NSString *) curfewFromJSON:(id)JSON
 {
     NSArray *values = [JSON allValues];
@@ -131,6 +136,24 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
     [operation start];
 }
 
+-(void) resetPasscodeIfServerWants
+{
+	if (![self NSStringIsValidEmail:email]) {
+		return;
+	}
+	
+    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:[self baseServerURL]]];
+    [client getPath:[self resetPasscodePath] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        if ([responseString isEqualToString:@"true"]) {
+			[self setPasscodeToString:nil];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        DDLogDebug(@"Failed! With error %@", error);
+    }];
+}
+
+
 -(void) killEverythingIfAfterCurfew
 {
 	if (![self NSStringIsValidEmail:email]) {
@@ -151,6 +174,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 -(void) wakeUpAndDoStuff
 {
     [self updateDisplayedCurfew];
+	[self resetPasscodeIfServerWants];
     [self killEverythingIfAfterCurfew];
 }
 
@@ -184,7 +208,7 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 	[[NSWorkspace sharedWorkspace] getFileSystemInfoForPath:bundlePath isRemovable:&removable isWritable:nil isUnmountable:&unmountable description:nil type:nil];
 
 	if (removable || unmountable) {
-		NSAlert *alert = [NSAlert alertWithMessageText:@"Please install Superego in the Applications directory, and run it from there." defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+		NSAlert *alert = [NSAlert alertWithMessageText:@"Please copy Superego into the Applications directory, and run it from there." defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
 		[alert runModal];
 		[[NSApplication sharedApplication] terminate:nil];
 	}
@@ -213,6 +237,8 @@ static const NSString *passcodeMD5Key = @"passcodeMD5";
 	if (email) {
 		[emailTextField setStringValue:email];
 	}
+	
+	[self resetPasscodeIfServerWants];
 		
 	NSString *passcodeMD5 = [[NSUserDefaults standardUserDefaults] stringForKey:(NSString *)passcodeMD5Key];
 	if (passcodeMD5 != nil && [passcodeMD5 length] > 0) {
